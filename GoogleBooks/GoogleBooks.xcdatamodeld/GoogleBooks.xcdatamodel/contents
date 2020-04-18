@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FavBook" representedClassName=".FavBook" syncable="YES">
+        <attribute name="authors" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="favourited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="infoLink" attributeType="String"/>
+        <attribute name="previewLink" attributeType="String"/>
+        <attribute name="publishedDate" optional="YES" attributeType="String"/>
+        <attribute name="publisher" optional="YES" attributeType="String"/>
+        <attribute name="selfLink" attributeType="String"/>
+        <attribute name="smallThumbnail" attributeType="String"/>
+        <attribute name="thumbnail" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="FavBook" positionX="-63" positionY="-18" width="128" height="223"/>
+    </elements>
+</model>
