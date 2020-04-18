@@ -31,7 +31,7 @@ class QueryService {
     func getSearchResults(searchTerm: String, completion: @escaping QueryResult) {
         dataTask?.cancel()
         if var urlComponents = URLComponents(string: "https://www.googleapis.com/books/v1/volumes") {
-            urlComponents.query = "q=\(searchTerm)"
+            urlComponents.query = "q=\(searchTerm)&maxResults=20&startIndex=0"
             guard let url = urlComponents.url else { return }
             
             dataTask = defaultSession.dataTask(with: url) { [weak self] data, response, error in
@@ -56,6 +56,33 @@ class QueryService {
         }
     }
     
+    func loadMoreSearchResults(searchTerm: String, startIndex: Int, completion: @escaping QueryResult) {
+        dataTask?.cancel()
+        if var urlComponents = URLComponents(string: "https://www.googleapis.com/books/v1/volumes") {
+            urlComponents.query = "q=\(searchTerm)&maxResults=20&startIndex=\(startIndex)"
+            guard let url = urlComponents.url else { return }
+            
+            dataTask = defaultSession.dataTask(with: url) { [weak self] data, response, error in
+                defer { self?.dataTask = nil }
+                
+                if let error = error {
+                    self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+                } else if
+                    let data = data,
+                    let response = response as? HTTPURLResponse,
+                    response.statusCode == 200 {
+                    
+                    self?.updateSearchResults(data)
+                    
+                    DispatchQueue.main.async {
+                        completion(self?.books, self?.errorMessage ?? "")
+                    }
+                }
+            }
+            
+            dataTask?.resume()
+        }
+    }
     //
     // MARK: - Private Methods
     //

@@ -23,6 +23,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let book = curBook {
+            self.title = book.title
             configureView(curBook: book)
         }
     }

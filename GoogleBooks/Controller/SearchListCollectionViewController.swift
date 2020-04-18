@@ -23,8 +23,11 @@ class SearchListCollectionViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     private let reuseIdentifier = "bookCollectionCell"
-    private let itemsPerRow: CGFloat = 2
+    private var itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
+    
+    private let maxResults = 20
+    private var nextResultStartIndex = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +35,12 @@ class SearchListCollectionViewController: UIViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
+        self.title = "GoogleBooks"
+        
         collectionView!.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout.init()
         
         searchBar.delegate = self
         
@@ -45,6 +51,15 @@ class SearchListCollectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView?.reloadData()
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            itemsPerRow = 4
+        } else {
+            itemsPerRow = 2
+        }
     }
     
     var books: [BookDetail] = []
@@ -154,6 +169,7 @@ extension SearchListCollectionViewController: UISearchBarDelegate {
                 } else {
                     self?.noResultLbl.isHidden = true
                 }
+                self?.nextResultStartIndex = 20
                 self?.collectionView.reloadData()
                 self?.collectionView.setContentOffset(CGPoint.zero, animated: false)
             }
@@ -200,7 +216,36 @@ extension SearchListCollectionViewController: UICollectionViewDataSource {
 
 extension SearchListCollectionViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.row == books.count - 1 ) {
+            guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+            
+            // Check to see if I should load additinal pagination data
+            // Not a perfect check as the num of results could be exactly 20
+            // Can be improved by adding a key to record the result count
+            guard books.count == nextResultStartIndex else { return }
+            
+            let hud: MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.label.text = "Loading..."
+            queryService.loadMoreSearchResults(searchTerm: searchText, startIndex: nextResultStartIndex) { [weak self] results, errorMessage in
+                
+                if let results = results {
+                    let bookDetailArray = results.map { BookDetail(from: $0) }
+                    self?.books.append(contentsOf: bookDetailArray)
+                    self?.nextResultStartIndex += self!.maxResults
+                    self?.collectionView.reloadData()
+//                    self?.collectionView.scrollToItem(at: indexPath, at: .right, animated: false)
+                }
+                
+                if let uiview = self?.view {
+                    MBProgressHUD.hide(for: uiview, animated: true)
+                }
+                
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
+            }
+        }
     }
 }
 

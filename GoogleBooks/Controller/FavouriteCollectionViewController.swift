@@ -16,7 +16,7 @@ class FavouriteCollectionViewController: UICollectionViewController {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private let reuseIdentifier = "bookCollectionCell"
-    private let itemsPerRow: CGFloat = 2
+    private var itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
 
     override func viewDidLoad() {
@@ -24,6 +24,8 @@ class FavouriteCollectionViewController: UICollectionViewController {
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+        
+        self.title = "Favourited Books"
         self.collectionView!.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -31,6 +33,15 @@ class FavouriteCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         refresh()
         collectionView.reloadData()
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            itemsPerRow = 4
+        } else {
+            itemsPerRow = 2
+        }
     }
     
     private func refresh() {
