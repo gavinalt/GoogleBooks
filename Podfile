@@ -7,7 +7,6 @@ target 'GoogleBooks' do
 
   # Pods for GoogleBooks
   pod 'SwiftLint'
-  pod 'Alamofire', '~> 5.0'
   pod 'MBProgressHUD', '~> 1.2.0'
   pod 'Kingfisher', '~> 5.0'
 

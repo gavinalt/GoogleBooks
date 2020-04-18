@@ -204,7 +204,6 @@
 			buildConfigurationList = 8696B81F2446286500BEC896 /* Build configuration list for PBXNativeTarget "GoogleBooks" */;
 			buildPhases = (
 				0F3037A92FDD3E96D02EACD5 /* [CP] Check Pods Manifest.lock */,
-				8643A23624462FEE00894305 /* ShellScript */,
 				8696B7F72446286300BEC896 /* Sources */,
 				8696B7F82446286300BEC896 /* Frameworks */,
 				8696B7F92446286300BEC896 /* Resources */,
@@ -321,7 +320,7 @@
 		};
 		4E4A90867A885769753B08F1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -335,23 +334,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoogleBooks/Pods-GoogleBooks-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		8643A23624462FEE00894305 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n    ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		F7CE10CC085CCCD949AF428B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

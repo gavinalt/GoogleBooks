@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.1.0)
   - Kingfisher (5.13.4):
     - Kingfisher/Core (= 5.13.4)
   - Kingfisher/Core (5.13.4)
@@ -7,24 +6,21 @@ PODS:
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.0)
   - Kingfisher (~> 5.0)
   - MBProgressHUD (~> 1.2.0)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - Kingfisher
     - MBProgressHUD
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 4a1c8fd507390d64df90144803f521737aec07e2
+PODFILE CHECKSUM: 038c9c88709a8d98f69c59f93f812d0aa68d7f5e
 
 COCOAPODS: 1.9.1
